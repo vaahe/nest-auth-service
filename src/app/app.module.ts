@@ -5,6 +5,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 
+import { AuthModule } from 'src/auth/auth.module';
+import { UserModule } from 'src/user/user.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -19,8 +22,12 @@ import { AppController } from './app.controller';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         autoLoadEntities: true,
+        synchronize: configService.get('NODE_ENV') === 'development'
       }),
     }),
+
+    AuthModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
