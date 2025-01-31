@@ -25,6 +25,14 @@ export class UserService {
         return user;
     }
 
+    async getUserByUsername(username: string): Promise<User> {
+        if (!username) {
+            throw new BadRequestException('Username is required');
+        }
+
+        return await this.userRepository.findOne({ where: { username } });
+    }
+
     async createUser(user: User): Promise<User> {
         const existingUser = await this.userRepository.findOne({ where: { username: user.username } });
 
