@@ -8,11 +8,7 @@ export class UserController {
 
     @Get()
     getUsers(): Promise<User[]> {
-        try {
-            return this.userService.getUsers();
-        } catch (error) {
-            console.error(error);
-        }
+        return this.userService.getUsers();
     }
 
     @Get(':id')
